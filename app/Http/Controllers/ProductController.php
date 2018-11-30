@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
-use App\Model\Product;
+use App\Repositories\Eloquents\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
+    protected $productRepository;
+
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +23,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = $this->productRepository->all();
+        return ProductResource::collection($products);
     }
 
     /**
@@ -47,7 +56,8 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        return new ProductResource(Product::find($id));
+        $product = $this->productRepository->find($id);
+        return new ProductResource($product);
     }
 
     /**
