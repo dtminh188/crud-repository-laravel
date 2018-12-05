@@ -3,8 +3,9 @@
 namespace App\Repositories\Eloquents;
 
 use App\Models\Product;
+use App\Repositories\Contracts\ProductRepositoryInterface;
 
-class ProductRepository
+class ProductRepository implements ProductRepositoryInterface
 {
     public function all()
     {
